@@ -6,7 +6,7 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-     <script>
+    <script>
     MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -245,10 +245,80 @@
         .custom-btn i {
             margin-right: 5px;
         }
+        /* 頂部導航橫幅 */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li {
+            margin: 0;
+        }
+
+        .nav-menu a {
+            color: #555;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* 為了避免內容被導航列遮住,給 body 加上 padding */
+        body {
+            padding-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu ul {
+                gap: 15px;
+                padding: 0 10px;
+            }
+            
+            .nav-menu a {
+                font-size: 0.85em;
+                padding: 3px 6px;
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 導航選單 -->
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#tldr">TL;DR</a></li>
+                <li><a href="#hourglass_mlp">Hourglass MLP</a></li>
+                <li><a href="#experiments">Experiments</a></li>
+                <li><a href="#projection">Input Projection Analysis</a></li>
+                <li><a href="#discussion">Discussion & Future Work</a></li>
+            </ul>
+        </nav>
         <header>
             <h1>Rethinking the Shape Convention of an MLP</h1>
             <div class="authors">
@@ -264,10 +334,21 @@
                 <a href="mailto:meng-hsi.chen@mtkresearch.com" style="color: #2563eb; text-decoration: none;">meng-hsi.chen@mtkresearch.com</a>, 
                 <a href="mailto:ft.liao@mtkresearch.com" style="color: #2563eb; text-decoration: none;">ft.liao@mtkresearch.com</a>
             </div>
+            <div class="hero-buttons" style="text-align:center; margin-top: 1rem;">
+            <a href="https://arxiv.org/abs/2510.01796" class="custom-btn">
+                <i class="bi bi-file-pdf"></i> Paper
+            </a>
+            <a href="" class="custom-btn">
+                <i class="bi bi-github"></i> Code
+            </a>
+            <a href="https://huggingface.co/papers/2510.01796" class="custom-btn">
+                <img src="images/huggingface.svg" alt="HuggingFace" style="height: 20px; width: auto; margin-right: 5px; vertical-align: middle;"> HuggingFace
+            </a>
+        </div>
         </header>
 
         <!-- TL;DR -->
-        <div class="section">
+        <div class="section" id="tldr">
             <h2>TL;DR</h2>
             
             <div class="highlight-box" style="background: linear-gradient(135deg, #667eea10, #764ba210); border-left: 4px solid #667eea;">
@@ -300,8 +381,8 @@
         </div> -->
 
         <!-- WIDE-NARROW-WIDE MLP -->
-        <div class="section">
-            <h2>Wide–Narrow–Wide MLP</h2>
+        <div class="section" id="hourglass_mlp">
+            <h2>Hourglass MLP</h2>
             
             <p>
                 We propose inverting the conventional narrow-wide-narrow MLP design to create wide-narrow-wide (hourglass) blocks. Based on theoretical foundations, we hypothesize that architectures with skip connections operating at higher dimensions may enable more advantageous incremental refinement.
@@ -342,8 +423,8 @@
         </div>
 
         <!-- EXPERIMENTS AND RESULTS -->
-        <div class="section">
-            <h2>Experiments and Results</h2>
+        <div class="section" id="experiments">
+            <h2>Experiments</h2>
             
 
             <h3>Tasks and Datasets</h3>
@@ -354,14 +435,14 @@
                     <h4>MNIST</h4>
                     <ul style="margin-left: 20px;">
                         <li>Generative classification</li>
-                        <li>Denoising (Added noise ~$\mathcal{N}(\mu=0.5, \sigma = 0.25)$)</li>
+                        <li>Denoising (Added noise ~$\mathcal{N}(\sigma = 0.25)$)</li>
                         <li>Super-resolution (14×14 → 28×28)</li>
                     </ul>
                 </div>
                 <div class="result-item">
                     <h4>ImageNet-32</h4>
                     <ul style="margin-left: 20px;">
-                        <li>Denoising (Added noise ~$\mathcal{N}(\mu=0.5, \sigma = 0.25)$)</li>
+                        <li>Denoising (Added noise ~$\mathcal{N}(\sigma = 0.25)$)</li>
                         <li>Super-resolution (16×16x3 → 32×32x3)</li>
                     </ul>
                 </div>
@@ -443,7 +524,7 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section" id="projection">
             <h2>Effect of Fixed vs. Trainable Input Projection</h2>
     
             <div class="figure">
@@ -463,7 +544,7 @@
 
 
         <!-- DISCUSSIONS AND FUTURE WORK -->
-        <div class="section">
+        <div class="section" id="discussion">
             <h2>Discussions and Future Work</h2>
             
             <p>
@@ -508,6 +589,18 @@
                 Such designs could enable more sophisticated representational transformations while maintaining favorable parameter-to-performance ratios, potentially advancing the state-of-the-art in efficient large-scale model architectures.
             </p>
 
+            <!-- <div class="contributions">
+                <h4 style="margin-bottom: 15px;">Key Contributions</h4>
+                <ul>
+                    <li>Propose inverting the conventional narrow-wide-narrow paradigm to a wide-narrow-wide (Hourglass) MLP design</li>
+                    
+                    <li>Demonstrate that the required input projection can be fixed at random initialization with negligible performance impact</li>
+                    
+                    <li>Show through empirical validation that the wide-narrow-wide design consistently leads to superior Pareto frontiers</li>
+                    
+                    <li>Reveal that Pareto-optimal Hourglass architectures favor deeper networks with wider skip connections and narrower bottleneck dimensions</li>
+                </ul>
+            </div> -->
         </div>
 
         <footer>
