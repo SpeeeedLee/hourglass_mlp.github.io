@@ -319,6 +319,7 @@
             <div class="figure">
                 <img src="images/hourglass_arch.png" 
                      alt="Figure 1: Hourglass MLP Architecture"
+                     style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
                      id="figure1">
                 <div class="figure-caption">
                     <strong>Figure 1:</strong> (a) Illustration of a wide-narrow-wide MLP block. The two endpoints z<sub>i</sub> and z<sub>i+1</sub> have a higher dimensionality compared to the hidden h<sub>i</sub>. (b) Illustration of a full network whose core is a stack of wide-narrow-wide MLP blocks.
@@ -378,22 +379,21 @@
             <h3>Genearative Classification Task</h3>
             
             <div class="figure">
-                <img src="/images/mnist_gc.png" 
-                    alt="Figure 2a: Performance-complexity Pareto front"
-                    style="width: 50%; height: auto;">
+                <img src="/images/gc_demo.png" 
+                    style="width: 65%; height: auto;">
                 <div class="figure-caption">
-                    <strong>Figure 2a:</strong> Performance-complexity Pareto front.
+                    <strong>Figure 2as:</strong> Samples predicted by the proposed Hourglass model.
                 </div>
             </div>
 
             <div class="figure">
-                <img src="/images/gc_demo.png" 
-                    alt="Figure 2b: Samples predicted by Hourglass model"
-                    style="width: 50%; height: auto;">
+                <img src="/images/mnist_gc.png" 
+                    style="width: 40%; height: auto;">
                 <div class="figure-caption">
-                    <strong>Figure 2b:</strong> Samples predicted by the proposed Hourglass model.
+                    <strong>Figure 2b:</strong> Performance-complexity Pareto front of Genearative Classification Task on MNIST.
                 </div>
             </div>
+
 
             <h3>Generative Restoration Tasks</h3>
             
@@ -401,12 +401,12 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
                     <div>
                         <img src="images/mnist_denoising.png" 
-                            style="width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(a) MNIST</p>
                     </div>
                     <div>
                         <img src="images/imagenet32_denoising.png"
-                            style="width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(b) ImageNet-32</p>
                     </div>
                 </div>
@@ -419,12 +419,12 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
                     <div>
                         <img src="images/mnist_super_resolution.png" 
-                            style="width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(a) MNIST</p>
                     </div>
                     <div>
                         <img src="images/imagenet32_super_resolution.png" 
-                            style="width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(b) ImageNet-32</p>
                     </div>
                 </div>
@@ -458,6 +458,7 @@
             <div class="figure">
                 <img src="images/comparison_imagenet_freeze_in.png" 
                     alt="Figure 5: Fixed vs Trainable Projection"
+                     style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
                     id="figure5">
                 <div class="figure-caption">
                     <strong>Figure 5:</strong> Comparison between fixed and trainable input projection W<sub>in</sub> for Hourglass MLP on ImageNet-32 denoising.
@@ -493,6 +494,7 @@
             <div class="figure">
                 <img src="images/250924_hourglass_LLM.png" 
                      alt="Figure 7: Transformer Extension"
+                     style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
                      id="figure7">
                 <div class="figure-caption">
                     <strong>Figure 7:</strong> Extend the wide-narrow-wide intuition to the transformer. (a) Classic transformer block. (b) Modified transformer block with wide-narrow-wide FFNs.
@@ -564,4 +566,3 @@
                 We fix d<sub>z</sub> = 3546, d<sub>h</sub> = 270, and vary the number of residual blocks L. Performance improves with deeper stacks, but quickly plateaus around L = 5, indicating that relatively shallow Hourglass MLPs are sufficient for strong results.
             </p> -->
         <!-- </div> -->
-
