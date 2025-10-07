@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 載入 Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <!-- 載入 MathJax -->
      <script>
     MathJax = {
       tex: {
@@ -260,20 +258,13 @@
                 <sup>1</sup>MediaTek Research &nbsp;&nbsp;&nbsp; <sup>2</sup>National Taiwan University<br>
                 <sup>*</sup>Equal contribution
             </div>
-        
-            <div class="hero-buttons" style="text-align:center; margin-top: 1rem;">
-                <a href="https://arxiv.org/abs/2510.01796" class="custom-btn">
-                    <i class="bi bi-file-pdf"></i> Paper
-                </a>
-                <a href="" class="custom-btn">
-                    <i class="bi bi-github"></i> Code
-                </a>
-                <a href="https://huggingface.co/papers/2510.01796" class="custom-btn">
-                    <img src="images/huggingface.svg" alt="HuggingFace" style="height: 20px; width: auto; margin-right: 5px; vertical-align: middle;"> HuggingFace
-                </a>
+            
+            <div class="correspondence" style="text-align: center; margin-top: 0.8rem; font-size: 0.9em; color: #666;">
+                <i class="bi bi-envelope"></i> Correspondence: 
+                <a href="mailto:meng-hsi.chen@mtkresearch.com" style="color: #2563eb; text-decoration: none;">meng-hsi.chen@mtkresearch.com</a>, 
+                <a href="mailto:ft.liao@mtkresearch.com" style="color: #2563eb; text-decoration: none;">ft.liao@mtkresearch.com</a>
             </div>
         </header>
-
 
         <!-- TL;DR -->
         <div class="section">
@@ -379,15 +370,15 @@
             <h3>Genearative Classification Task</h3>
             
             <div class="figure">
-                <img src="/images/gc_demo.png" 
+                <img src="images/gc_demo.png" 
                     style="width: 65%; height: auto;">
                 <div class="figure-caption">
-                    <strong>Figure 2as:</strong> Samples predicted by the proposed Hourglass model.
+                    <strong>Figure 2a:</strong> Samples predicted by the proposed Hourglass model.
                 </div>
             </div>
 
             <div class="figure">
-                <img src="/images/mnist_gc.png" 
+                <img src="images/mnist_gc.png" 
                     style="width: 40%; height: auto;">
                 <div class="figure-caption">
                     <strong>Figure 2b:</strong> Performance-complexity Pareto front of Genearative Classification Task on MNIST.
@@ -517,18 +508,6 @@
                 Such designs could enable more sophisticated representational transformations while maintaining favorable parameter-to-performance ratios, potentially advancing the state-of-the-art in efficient large-scale model architectures.
             </p>
 
-            <!-- <div class="contributions">
-                <h4 style="margin-bottom: 15px;">Key Contributions</h4>
-                <ul>
-                    <li>Propose inverting the conventional narrow-wide-narrow paradigm to a wide-narrow-wide (Hourglass) MLP design</li>
-                    
-                    <li>Demonstrate that the required input projection can be fixed at random initialization with negligible performance impact</li>
-                    
-                    <li>Show through empirical validation that the wide-narrow-wide design consistently leads to superior Pareto frontiers</li>
-                    
-                    <li>Reveal that Pareto-optimal Hourglass architectures favor deeper networks with wider skip connections and narrower bottleneck dimensions</li>
-                </ul>
-            </div> -->
         </div>
 
         <footer>
@@ -537,32 +516,3 @@
     </div>
 </body>
 </html>
-
-
-        <!-- ABLATION STUDY -->
-        <!-- <div class="section">
-            <h2>Ablation Study</h2>
-            
-            <p>
-                To further explore the design trade-offs within the proposed wide-narrow-wide (Hourglass) MLP architecture, we conduct ablation studies focusing on two key hyperparameters: the bottleneck dimension d<sub>h</sub> and the number of residual blocks L.
-            </p>
-
-            <div class="figure">
-                <img src="images/comparison_imagenet_freeze_in.png" 
-                     alt="Figure 6: Ablation Study"
-                     id="figure6">
-                <div class="figure-caption">
-                    <strong>Figure 6:</strong> Ablation study of optimal d<sub>h</sub> and L dimension for the Hourglass MLP architecture. (a) Varying bottleneck dimension. (b) Varying number of residual blocks.
-                </div>
-            </div> -->
-
-            <!-- <h3>Effect of Bottleneck Width d<sub>h</sub></h3>
-            <p>
-                We fix the high-dimensional residual space to d<sub>z</sub> = 3546 and the number of residual blocks to L = 5, and vary the bottleneck width d<sub>h</sub>. Increasing d<sub>h</sub> improves PSNR, but the gains diminish beyond d<sub>h</sub> = 270. This suggests that moderate bottlenecks are sufficient for high performance, enabling significant parameter savings.
-            </p>
-
-            <h3>Effect of Residual Depth L</h3>
-            <p>
-                We fix d<sub>z</sub> = 3546, d<sub>h</sub> = 270, and vary the number of residual blocks L. Performance improves with deeper stacks, but quickly plateaus around L = 5, indicating that relatively shallow Hourglass MLPs are sufficient for strong results.
-            </p> -->
-        <!-- </div> -->
