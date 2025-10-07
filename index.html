@@ -358,6 +358,7 @@
                 <li><a href="#hourglass_mlp">Hourglass MLP</a></li>
                 <li><a href="#experiments">Experiments</a></li>
                 <li><a href="#projection">Input Projection Analysis</a></li>
+                <li><a href="#architectural">Architectural Analysis</a></li>
                 <li><a href="#discussion">Discussions & Future Work</a></li>
             </ul>
         </nav>
@@ -452,8 +453,8 @@
             <div class="highlight-box">
                 <h4 style="margin-bottom: 10px;">3. Output conversion</h4>
                 <p>An output network $W_{\text{out}}$ converts the last latent $z_{L}$ back to the output space:
-                    $$\hat{y}=W_{\text{out}}z_{L}, \quad \text{where } W_{\text{out}} \in \mathbb{R}^{d_x \times d_z}$$
-                </p>
+                    $$\hat{y}=W_{\text{out}}z_{L}$$
+                    Note that the shape of $W_{\text{out}}$ depends on the task-specific output dimension (e.g., for denoising, $W_{\text{out}} \in \mathbb{R}^{d_x \times d_z}$).                </p>            
             </div>
         </div>
 
@@ -471,14 +472,14 @@
                     <h4>MNIST</h4>
                     <ul style="margin-left: 20px;">
                         <li>Generative classification</li>
-                        <li>Denoising (Added noise ~$\mathcal{N}(\sigma = 0.25)$)</li>
+                        <li>Denoising (Added noise ~$\mathcal{N}(0, 0.25)$)</li>
                         <li>Super-resolution (14×14 → 28×28)</li>
                     </ul>
                 </div>
                 <div class="result-item">
                     <h4>ImageNet-32</h4>
                     <ul style="margin-left: 20px;">
-                        <li>Denoising (Added noise ~$\mathcal{N}(\sigma = 0.25)$)</li>
+                        <li>Denoising (Added noise ~$\mathcal{N}(0, 0.25)$)</li>
                         <li>Super-resolution (16×16x3 → 32×32x3)</li>
                     </ul>
                 </div>
@@ -540,7 +541,8 @@
                     <div class="figure-caption">
                         <strong>Figure 4:</strong> Performance-complexity Pareto fronts of Generative Restoration Task: Super-resolution
                     </div>
-                </div>
+            </div>
+            
 
             <h3>Observation</h3>
             
@@ -573,6 +575,39 @@
                 <ul>
                     <li>Implementing Hourglass MLPs requires an initial projection ($W_{\text{in}}$) to lift inputs to expanded dimensions. Inspired by reservoir computing, we propose that this projection can remain fixed at random initialization throughout training.</li>
                     <li>Figure 5 demonstrates that fixing $W_{\text{in}}$ at random initialization performs comparably to training it on ImageNet-32 denoising, which can offset the additional burden of having to carry one more matrix-vector computing layer.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="architectural">
+            <h2>Hourglass Architectural Analysis</h2>
+            To further explore the design trade-offs within the proposed Hourglass MLP architecture, we conduct ablation studies focusing on two key hyperparameters: the bottleneck dimension $d_h$ and the number of residual blocks $L$.
+            <div class="figure">
+                    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; align-items: flex-start;">
+                        <div style="text-align: center;">
+                            <img src="images/vary_dh.png" 
+                                style="width: 350px; max-width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(a) Varying the bottleneck dimension $d_h$</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/vary_L.png" 
+                                style="width: 350px; max-width: 100%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(b) Varying the number of residual blocks $L$</p>
+                        </div>
+                    </div>
+                    <div class="figure-caption">
+                        <strong>Figure 6:</strong> Ablation study of optimal $d_h$ and $L$ dimension for the Hourglass MLP architecture.
+                    </div>
+            </div>
+            
+            
+
+
+            <h3>Observation</h3>
+            <div class="contributions">
+                <ul>
+                    <li>Moderate bottlenecks are sufficient for high performance, enabling significant parameter savings.</li>
+                    <li>Performance improves with deeper stacks, but quickly plateaus around $L=5$, indicating that relatively shallow Hourglass MLPs are sufficient for strong results.</li>
                 </ul>
             </div>
         </div>
