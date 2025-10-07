@@ -245,17 +245,32 @@
         .custom-btn i {
             margin-right: 5px;
         }
-        /* 頂部導航橫幅 */
+
         .nav-menu {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 1.00);
             backdrop-filter: blur(10px);
-            padding: 15px 0;
+            padding: 10px 40px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logos {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-logos img {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
         }
 
         .nav-menu ul {
@@ -263,10 +278,9 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             gap: 30px;
-            flex-wrap: wrap;
         }
 
         .nav-menu li {
@@ -288,6 +302,27 @@
             background: rgba(102, 126, 234, 0.1);
         }
 
+        @media (max-width: 768px) {
+            .nav-menu {
+                padding: 10px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-logos img {
+                height: 28px;
+            }
+            
+            .nav-menu ul {
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .nav-menu a {
+                font-size: 0.85em;
+                padding: 3px 6px;
+            }
+        }
         /* 為了避免內容被導航列遮住,給 body 加上 padding */
         body {
             padding-top: 60px;
@@ -311,6 +346,10 @@
     <div class="container">
         <!-- 導航選單 -->
         <nav class="nav-menu">
+            <div class="nav-logos">
+                <img src="images/MR-logo.jpg" alt="MediaTek Research">
+                <img src="images/NTU-logo.png" alt="NTU">
+            </div>
             <ul>
                 <li><a href="#tldr">TL;DR</a></li>
                 <li><a href="#hourglass_mlp">Hourglass MLP</a></li>
@@ -347,13 +386,18 @@
         </div>
         </header>
 
-        <!-- TL;DR -->
-        <div class="section" id="tldr">
+        <!-- TL;DR
+        <!-- <div class="section" id="tldr">
             <h2>TL;DR</h2>
             
             <div class="highlight-box" style="background: linear-gradient(135deg, #667eea10, #764ba210); border-left: 4px solid #667eea;">
                 <p style="font-size: 1.1em; font-weight: 500; color: #2c3e50; margin-bottom: 20px;">
-                    <strong>Challenging conventional MLP design:</strong> Wide-narrow-wide "Hourglass" MLPs consistently outperform traditional narrow-wide-narrow architectures with fewer parameters across multiple generative tasks.
+                    Motivated by several theoretical frameworks, e.g., 
+                    resovior computing: employs fixed random input projections in Echo State Networks; 
+                    
+                    (, Cover's thorem, SVM) that suggest operations in higher-dimensional spaces offer computational advantages, 
+                    We prpose to invert the standard MLP paradigm. 
+                    Instead of placing skip connections at narrow input/output dimensions with processing in expanded hidden layers (narrow→wide→narrow), the proposed Hourglass design operates skip connections in high-dimensional spaces while computation flows through narrow bottlenecks (wide→narrow→wide).
                 </p>
             </div>
 
@@ -361,16 +405,53 @@
                 This paper inverts the standard MLP paradigm. Instead of placing skip connections at narrow input/output dimensions with processing in expanded hidden layers (narrow→wide→narrow), the proposed Hourglass design operates skip connections in high-dimensional spaces while computation flows through narrow bottlenecks (wide→narrow→wide).
             </p>
 
-            <h3>Key Findings</h3>
+            <h3>Key Contributions</h3>
                 <ul>
-                    <li><strong>Superior performance with fewer parameters:</strong> On ImageNet-32 denoising, Hourglass MLPs achieve 22.31 dB PSNR with only 66M parameters, while conventional models require 75M for equivalent performance</li>
+                    <li>We propose inverting the conventional narrow-wide-narrow paradigm to a wide-narrow-wide (Hourglass) MLP design, with an input projection to lift natural signal to the wide dimension.</li>
                     
-                    <li><strong>Optimal architectural pattern across all tasks:</strong> Deeper networks (L=4-5) with wider skip connections (d<sub>z</sub>≥3075) and narrower bottlenecks (d<sub>h</sub>=270-765) consistently dominate the Pareto frontier on MNIST and ImageNet-32 generative tasks</li>
+                    <li>We propose that that the required input projection can be fixed at random initialization with negligible performance impact, enabling efficient implementations of wide-narrow-wide MLPs.</li>
                     
-                    <li><strong>Training efficiency on ImageNet-32 denoising:</strong> Input projection (W<sub>in</sub>) can remain fixed at random initialization with negligible performance impact compared to trainable projection</li>
+                    <li>Through empirical validation on generative tasks, we show that the wide-narrow-wide design consistently leads to a superior Pareto frontiers compared to the conventional design.</li>
                     
-                    <li><strong>Broader impact:</strong> The wide-narrow-wide design principles suggest promising future directions for Transformers and other residual networks</li>                </ul>
+                    <li>Our experiments reveal that Pareto-optimal Hourglass architectures consistently favor deeper networks with wider skip connections and narrower bottleneck dimensions as the parameter count increases.</li>                </ul>
+        </div> --> -->
+        <!-- TL;DR -->
+       <div class="section" id="tldr">
+        <h2>TL;DR</h2>
+        
+        <h3>Motivation and Method</h3>
+        <div class="highlight-box" style="background: linear-gradient(135deg, #667eea10, #764ba210); border-left: 4px solid #667eea;">
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    Building upon theoretical frameworks suggesting computational advantages in higher-dimensional spaces (e.g., Cover's theorem on linear separability, kernel methods in SVMs, and reservoir computing with fixed random projections), we invert the standard MLP paradigm.
+                </li>
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    Instead of the conventional "narrow→wide→narrow" architectures with skip connections operating at the narrower input/output dimensions, our <strong>Hourglass design</strong> employs "wide→narrow→wide" blocks where skip connections operate in expanded latent dimensions while residual computations flow through narrow bottlenecks.
+                </li>
+            </ul>
         </div>
+        
+        <h3>Key Contributions</h3>
+        <div class="highlight-box" style="background: linear-gradient(135deg, #667eea10, #764ba210); border-left: 4px solid #667eea;">
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    We propose inverting the conventional narrow-wide-narrow paradigm to a wide-narrow-wide (Hourglass) MLP design, with an input projection to lift natural signals to higher dimensions.
+                </li>
+                
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    We demonstrate that the required input projection can be fixed at random initialization with negligible performance impact, inspired by reservoir computing principles.
+                </li>
+                
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    Through empirical validation on generative tasks, we show that the wide-narrow-wide design consistently leads to superior Pareto frontiers compared to conventional designs.
+                </li>
+                
+                <li style="font-size: 1.05em; font-weight: 500; color: #2c3e50; margin-bottom: 15px;">
+                    Our experiments reveal that Pareto-optimal Hourglass architectures consistently favor deeper networks with wider skip connections and narrower bottleneck dimensions as parameter count increases.
+                </li>
+            </ul>
+        </div>
+    </div>
 
         <!-- ABSTRACT -->
         <!-- <div class="section">
@@ -385,7 +466,8 @@
             <h2>Hourglass MLP</h2>
             
             <p>
-                We propose inverting the conventional narrow-wide-narrow MLP design to create wide-narrow-wide (hourglass) blocks. Based on theoretical foundations, we hypothesize that architectures with skip connections operating at higher dimensions may enable more advantageous incremental refinement.
+                <!-- We propose inverting the conventional narrow-wide-narrow MLP design to create wide-narrow-wide (hourglass) blocks.  -->
+                Based on theoretical foundations, we hypothesize that architectures with skip connections operating at higher dimensions may enable more advantageous incremental refinement.
             </p>
 
             <div class="figure">
@@ -394,7 +476,8 @@
                      style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
                      id="figure1">
                 <div class="figure-caption">
-                    <strong>Figure 1:</strong> (a) Illustration of a wide-narrow-wide MLP block. The two endpoints z<sub>i</sub> and z<sub>i+1</sub> have a higher dimensionality compared to the hidden h<sub>i</sub>. (b) Illustration of a full network whose core is a stack of wide-narrow-wide MLP blocks.
+                    <strong>Figure 1:</strong> (a) Illustration of a wide-narrow-wide MLP block. The two endpoints z<sub>i</sub> and z<sub>i+1</sub> have a higher dimensionality compared to the hidden h<sub>i</sub>. <P></P>
+                    (b) Illustration of a full network whose core is a stack of wide-narrow-wide MLP blocks.
                 </div>
             </div>
 
@@ -427,7 +510,7 @@
             <h2>Experiments</h2>
             
 
-            <h3>Tasks and Datasets</h3>
+            <h3>Setup</h3>
             <p>We evaluate on two image datasets with multiple generative tasks:</p>
             
             <div class="result-grid">
@@ -452,15 +535,16 @@
             
             <div class="figure">
                 <img src="images/gc_demo.png" 
-                    style="width: 65%; height: auto;">
+                    style="width: 55%; height: auto;">
                 <div class="figure-caption">
-                    <strong>Figure 2a:</strong> Samples predicted by the proposed Hourglass model.
+                    <strong>Figure 2a:</strong> Generative classification task on MNIST requires a model to take in an input digit image and generates a prototypical digit image.
+                    <!-- Samples predicted by the proposed Hourglass model. -->
                 </div>
             </div>
 
             <div class="figure">
                 <img src="images/mnist_gc.png" 
-                    style="width: 40%; height: auto;">
+                    style="width: 35%; height: auto;">
                 <div class="figure-caption">
                     <strong>Figure 2b:</strong> Performance-complexity Pareto front of Genearative Classification Task on MNIST.
                 </div>
@@ -473,12 +557,12 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
                     <div>
                         <img src="images/mnist_denoising.png" 
-                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 68%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(a) MNIST</p>
                     </div>
                     <div>
                         <img src="images/imagenet32_denoising.png"
-                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 68%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(b) ImageNet-32</p>
                     </div>
                 </div>
@@ -491,12 +575,12 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
                     <div>
                         <img src="images/mnist_super_resolution.png" 
-                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 68%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(a) MNIST</p>
                     </div>
                     <div>
                         <img src="images/imagenet32_super_resolution.png" 
-                            style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+                            style="width: 68%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">(b) ImageNet-32</p>
                     </div>
                 </div>
@@ -506,20 +590,15 @@
             </div>
 
 
-            <p>
-                Across datasets and tasks, the proposed wide-narrow-wide (Hourglass) MLP consistently outperforms the conventional narrow-wide-narrow baseline. On ImageNet-32 denoising, the Hourglass model attains 22.31 dB PSNR with only 66M parameters, whereas the best conventional model requires 75M to reach the same score.
-            </p>
-
-            <h3>Pareto-Optimal Architecture Configurations</h3>
-            <p>Analysis of the best-performing models reveals three consistent trends:</p>
+            <h3>Observation</h3>
             
             <div class="contributions">
                 <ul>
-                    <li><strong>Hourglass models achieve higher PSNR with fewer parameters.</strong> Across tasks, Hourglass architectures consistently surpass conventional models while using substantially fewer parameters.</li>
+                    <li><strong>Superior performance with fewer parameters.</strong> Across datasets and tasks, the proposed wide-narrow-wide (Hourglass) MLP consistently outperforms the conventional narrow-wide-narrow baseline. Specifically, on ImageNet-32 denoising, the Hourglass model attains 22.31 dB PSNR with only 66M parameters, whereas the best conventional model requires 75M to reach the same score.</li>
                     
-                    <li><strong>Hourglass architectures favor depth and moderate bottlenecks.</strong> Optimal configurations typically use L = 4 or 5 with d<sub>h</sub> between 270 and 765, in contrast to conventional designs that rely on shallow depth (L ≤ 3) and very wide hidden layers (d<sub>h</sub> ≥ 3075).</li>
+                    <li><strong>Deeper networks with moderate bottlenecks.</strong> Optimal Hourglass configurations typically use L = 4 or 5 with d<sub>h</sub> between 270 and 765, in contrast to conventional designs that rely on shallow depth (L ≤ 3) and very wide hidden layers (d<sub>h</sub> ≥ 3075).</li>
                     
-                    <li><strong>High-dimensional skip connections improve parameter efficiency.</strong> Models with large d<sub>z</sub> (commonly 3075 or larger) and relatively small d<sub>h</sub> maintain or improve PSNR.</li>
+                    <li><strong>High-dimensional skip connections improve parameter efficiency.</strong> Models with large d<sub>z</sub> (commonly 3075 or larger) and relatively small d<sub>h</sub> maintain or improve PSNR, demonstrating the effectiveness of operating skip connections in expanded latent dimensions.</li>
                 </ul>
             </div>
         </div>
@@ -530,16 +609,20 @@
             <div class="figure">
                 <img src="images/comparison_imagenet_freeze_in.png" 
                     alt="Figure 5: Fixed vs Trainable Projection"
-                     style="width: 72%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
+                     style="width: 68%; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);"
                     id="figure5">
                 <div class="figure-caption">
-                    <strong>Figure 5:</strong> Comparison between fixed and trainable input projection W<sub>in</sub> for Hourglass MLP on ImageNet-32 denoising.
+                    <strong>Figure 5:</strong> Comparison between fixed and trainable input projection W<sub>in</sub> for Hourglass MLP with (d<sub>z</sub>, d<sub>h</sub>, L) = (3546, 270, 5) on ImageNet-32 denoising.
                 </div>
             </div>
-
-            <p>
-                On the ImageNet-32 denoising task with configuration (d<sub>z</sub>, d<sub>h</sub>, L) = (3546, 270, 5), we compare fixed versus trainable input projections. The trainable model is only marginally better than the fixed model, suggesting that the gains from learning W<sub>in</sub> are minor. Fixed projections offer a strong parameter-efficient alternative.
-            </p>
+            
+            <h3>Observation</h3>
+            <div class="contributions">
+                <ul>
+                    <li>Implementing Hourglass MLPs requires an initial projection ($W_{\text{in}}$) to lift inputs to expanded dimensions. Inspired by reservoir computing, we propose that this projection can remain fixed at random initialization throughout training.</li>
+                    <li>Figure 5 demonstrates that fixing $W_{\text{in}}$ at random initialization performs comparably to training it on ImageNet-32 denoising, which can offset the additional burden of having to carry one more matrix-vector computing layer.</li>
+                </ul>
+            </div>
         </div>
 
 
@@ -609,3 +692,32 @@
     </div>
 </body>
 </html>
+
+
+        <!-- ABLATION STUDY -->
+        <!-- <div class="section">
+            <h2>Ablation Study</h2>
+            
+            <p>
+                To further explore the design trade-offs within the proposed wide-narrow-wide (Hourglass) MLP architecture, we conduct ablation studies focusing on two key hyperparameters: the bottleneck dimension d<sub>h</sub> and the number of residual blocks L.
+            </p>
+
+            <div class="figure">
+                <img src="images/comparison_imagenet_freeze_in.png" 
+                     alt="Figure 6: Ablation Study"
+                     id="figure6">
+                <div class="figure-caption">
+                    <strong>Figure 6:</strong> Ablation study of optimal d<sub>h</sub> and L dimension for the Hourglass MLP architecture. (a) Varying bottleneck dimension. (b) Varying number of residual blocks.
+                </div>
+            </div> -->
+
+            <!-- <h3>Effect of Bottleneck Width d<sub>h</sub></h3>
+            <p>
+                We fix the high-dimensional residual space to d<sub>z</sub> = 3546 and the number of residual blocks to L = 5, and vary the bottleneck width d<sub>h</sub>. Increasing d<sub>h</sub> improves PSNR, but the gains diminish beyond d<sub>h</sub> = 270. This suggests that moderate bottlenecks are sufficient for high performance, enabling significant parameter savings.
+            </p>
+
+            <h3>Effect of Residual Depth L</h3>
+            <p>
+                We fix d<sub>z</sub> = 3546, d<sub>h</sub> = 270, and vary the number of residual blocks L. Performance improves with deeper stacks, but quickly plateaus around L = 5, indicating that relatively shallow Hourglass MLPs are sufficient for strong results.
+            </p> -->
+        <!-- </div> -->
