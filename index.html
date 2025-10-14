@@ -21,8 +21,7 @@
     <style>
         html {
             scroll-behavior: smooth;
-            /* scroll-padding-top: 82px;  導航列高度 + 一些空間 */
-            scroll-padding-top: 41px;
+            scroll-padding-top: 82px;  /* 導航列高度 + 一些空間 */
         }
 
         * {
@@ -37,8 +36,7 @@
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            /* font-size: 15px; */
-            font-size: 8px;
+            font-size: 13.5px;
             padding-top: 60px;
         }
         
@@ -357,7 +355,7 @@
             </div>
             <ul>
                 <li><a href="#tldr">TL;DR</a></li>
-                <li><a href="#hourglass_mlp">Wide-Narrow-Wide (Hourglass) MLP</a></li>
+                <li><a href="#hourglass_mlp">Hourglass MLP</a></li>
                 <li><a href="#experiments">Experiments</a></li>
                 <li><a href="#projection">Input Projection Analysis</a></li>
                 <li><a href="#architectural">Architectural Analysis</a></li>
@@ -418,7 +416,7 @@
 
         <!-- WIDE-NARROW-WIDE MLP -->
         <div class="section" id="hourglass_mlp">
-            <h2>Wide-Narrow-Wide (Hourglass) MLP</h2>
+            <h2>Hourglass MLP</h2>
             
             <p>
                 <!-- We propose inverting the conventional narrow-wide-narrow MLP design to create wide-narrow-wide (hourglass) blocks.  -->
